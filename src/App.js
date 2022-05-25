@@ -1,23 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import PokemonList from "./components/PokemonList";
+import SearchPokemon from "./components/SearchPokemon";
+import { miniDex } from "./miniDex";
 
 function App() {
+  const [filter, setFilter] = useState("");
+
+  const inputSearch = (data) => {
+    setFilter(data);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SearchPokemon inputSearch={inputSearch}/>
+      <PokemonList pokemonList={miniDex}/>
     </div>
   );
 }

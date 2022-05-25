@@ -1,70 +1,293 @@
-# Getting Started with Create React App
+# Desafio 03
+O desafio dessa semana é temático de Pokemon:
+Dada a estrutura de dados abaixo, onde temos o numero na pokedex, o nome, a as evoluções anterior, e posteriores.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```
+type Pokemon {
+    dex: number
+    name: string
+    prevEvo: number[]
+    nextEvo: number[]
+}
+```
+Escreva um algoritmo que receba como parâmetro dois tipos de pesquisas:
+Tipo exact, onde você vai pesquisar pokemons que contenham o trecho da busca enviado (veja exemplo 01 onde foi pesquisado por “al”).
+Tipo evolution, onde além de pesquisar o o trecho de busca(igual o tipo 1), você vai retorna também todas as possíveis evoluções, tanto pregressas quanto posteriores (veja exemplos 02 onde retornamos a linha evolutiva do Ralts).
+Perceba, que se você pesquisar por um pokemon no fim da cadeia evolutiva, e ele tiver outras opções, você deve retornar todas as evoluções anteriores (veja exemplo 03). E a busca deve ser ordenada pelo numero na dex (veja exemplo 04).
 
-## Available Scripts
+```
+const miniDex = []Pokemon{
+  Pokemon{
+    dex: 35,
+    name: "Clefairy",
+    prevEvo: [173],
+    nextEvo: [36],
+  },
+  Pokemon{
+    dex: 36,
+    name: "Clefable",
+    prevEvo: [35],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 133,
+    name: "Eevee",
+    prevEvo: [],
+    nextEvo: [134, 135, 136, 196, 197, 470, 471, 700],
+  },
+  Pokemon{
+    dex: 134,
+    name: "Vaporeon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 135,
+    name: "Jolteon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 136,
+    name: "Flareon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 173,
+    name: "Cleffa",
+    prevEvo: [],
+    nextEvo: [35],
+  },
+  Pokemon{
+    dex: 183,
+    name: "Marill",
+    prevEvo: [298],
+    nextEvo: [184],
+  },
+  Pokemon{
+    dex: 184,
+    name: "Azumarill",
+    prevEvo: [183],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 196,
+    name: "Espeon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 197,
+    name: "Umbreon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 280,
+    name: "Ralts",
+    prevEvo: [],
+    nextEvo: [281],
+  },
+  Pokemon{
+    dex: 281,
+    name: "Kirlia",
+    prevEvo: [280],
+    nextEvo: [282, 475],
+  },
+  Pokemon{
+    dex: 282,
+    name: "Gardevoir",
+    prevEvo: [281],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 298,
+    name: "Azurill",
+    prevEvo: [],
+    nextEvo: [183],
+  },
+  Pokemon{
+    dex: 470,
+    name: "Leafeon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 471,
+    name: "Glaceon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 475,
+    name: "Gallade",
+    prevEvo: [281],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 700,
+    name: "Sylveon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+}
+```
 
-In the project directory, you can run:
+### Exemplo 01:
+Input: SearchPokemon("exact", miniDex, "al")
+Output:
 
-### `npm start`
+```
+[
+  Pokemon{
+    dex: 280,
+    name: "Ralts",
+    prevEvo: [],
+    nextEvo: [281],
+  },
+  Pokemon{
+    dex: 475,
+    name: "Gallade",
+    prevEvo: [281],
+    nextEvo: [],
+  },
+]
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Exemplo 02:
+Input: SearchPokemon("evolution", miniDex, "al")
+Output:
 
-### `npm test`
+```
+[
+  Pokemon{
+    dex: 280,
+    name: "Ralts",
+    prevEvo: [],
+    nextEvo: [281],
+  },
+  Pokemon{
+    dex: 281,
+    name: "Kirlia",
+    prevEvo: [280],
+    nextEvo: [282, 475],
+  },
+  Pokemon{
+    dex: 282,
+    name: "Gardevoir",
+    prevEvo: [281],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 475,
+    name: "Gallade",
+    prevEvo: [281],
+    nextEvo: [],
+  },
+]
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Exemplo 03:
+Input: SearchPokemon("evolution", miniDex, "sylveon")
+Output:
 
-### `npm run build`
+```
+[
+  Pokemon{
+    dex: 133,
+    name: "Eevee",
+    prevEvo: [],
+    nextEvo: [134, 135, 136],
+  },
+  Pokemon{
+    dex: 134,
+    name: "Vaporeon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 135,
+    name: "Jolteon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 136,
+    name: "Flareon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 196,
+    name: "Espeon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 197,
+    name: "Umbreon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 470,
+    name: "Leafeon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 471,
+    name: "Glaceon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 700,
+    name: "Sylveon",
+    prevEvo: [133],
+    nextEvo: [],
+  },
+]
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Exemplo 04:
+Input: SearchPokemon("evolution", miniDex, "cleffa")
+Output:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+[
+  Pokemon{
+    dex: 35,
+    name: "Clefairy",
+    prevEvo: [173],
+    nextEvo: [36],
+  },
+  Pokemon{
+    dex: 36,
+    name: "Clefable",
+    prevEvo: [35],
+    nextEvo: [],
+  },
+  Pokemon{
+    dex: 173,
+    name: "Cleffa",
+    prevEvo: [],
+    nextEvo: [35],
+  },
+]
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Bonus round:
+Permita que seu algoritmo além de receber o nome, também receba o dex number.
+Vamos lembrar os detalhes:
+1 - Eu vou passar um desafio de código, e na sexta-feira discutiremos as soluções de vocês.
+2 - Não tem solução errada, ou certa, vamos analisar todas e ver onde cada uma se encaixa.
+3 - Por enquanto vão ser uns desafios meio agnósticos de tecnologia/linguagem até que eu consiga organizar melhor.
+Vamos as regras:
+1 - Se você for utilizar recursos de tecnologias, ou Libs tipo .sort(), você tem que saber o que o .sort() faz.
+2 - Pode fazer em qualquer linguagem.
+3 - Na sexta nós vamos discutir porquê uma solução pode ser melhor que outra, lembrando que não tem resposta certa, tem situação melhor.
+4 - Se vc solucionar, manda o código por aqui, de preferência em arquivo.
+5 - Se o desafio disser que o input será de tal forma, acredite que será de tal forma.
